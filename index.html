@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<title>Informatika óra PRO MAX</title>
+
+<style>
+:root {
+    --bg:#f5f7fa;
+    --card:#ffffffcc;
+    --text:#222;
+}
+
+body.dark {
+    --bg:#1a1a1a;
+    --card:#2a2a2acc;
+    --text:#eee;
+}
+
+body {
+    margin:0;
+    font-family:Arial;
+    background:var(--bg);
+    color:var(--text);
+    transition:0.3s;
+}
+
+.topbar {
+    display:flex;
+    justify-content:space-between;
+    padding:10px 20px;
+}
+
+.container {
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.card {
+    background:var(--card);
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+    backdrop-filter: blur(10px);
+}
+
+.text-box {
+    background:#00000010;
+    padding:10px;
+    border-radius:8px;
+    white-space:pre-wrap;
+}
+
+button {
+    margin-top:10px;
+    margin-right:5px;
+    padding:8px 12px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:#667eea;
+    color:white;
+}
+
+.hidden {
+    display:none;
+}
+
+input {
+    padding:8px;
+    border-radius:8px;
+    border:none;
+}
+</style>
+
+<script>
+function toggleDark(){
+    document.body.classList.toggle("dark");
+}
+
+function copyText(id,btn){
+    let text=document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text);
+    btn.innerText="✅";
+    setTimeout(()=>btn.innerText="📋 Másolás",1500);
+}
+
+function downloadWord(id){
+    let text=document.getElementById(id).innerText;
+    let blob=new Blob([text], {type:"application/msword"});
+    let a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="feladat.doc";
+    a.click();
+}
+
+function unlock(){
+    let pw=prompt("Tanári jelszó:");
+    if(pw==="tanar123"){
+        document.querySelectorAll(".hidden").forEach(e=>e.classList.remove("hidden"));
+    } else {
+        alert("Hibás jelszó!");
+    }
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="topbar">
+    <button onclick="toggleDark()">🌙</button>
+    <button onclick="unlock()">🔓 Tanári mód</button>
+</div>
+
+<div class="container">
+
+<div class="card hidden">
+    <h3>1. feladat</h3>
+    <div class="text-box" id="t1">
+Ez egy titkos feladat.
+
+Formázd meg:
+- cím
+- felsorolás
+- félkövér
+    </div>
+
+    <button onclick="copyText('t1',this)">📋 Másolás</button>
+    <button onclick="downloadWord('t1')">📥 Word letöltés</button>
+</div>
+
+<div class="card hidden">
+    <h3>2. feladat</h3>
+    <div class="text-box" id="t2">
+Az informatika fejleszti a logikus gondolkodást.
+
+Készíts különböző stílusokat.
+    </div>
+
+    <button onclick="copyText('t2',this)">📋 Másolás</button>
+    <button onclick="downloadWord('t2')">📥 Word letöltés</button>
+</div>
+
+</div>
+
+</body>
+</html>
